@@ -13,6 +13,6 @@ class BikeSeeder extends Seeder
      */
     public function run(): void
     {
-        Bike::factory()->count(10)->create();
+        Bike::factory(10)->create();
     }
 }

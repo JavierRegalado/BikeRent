@@ -51,6 +51,16 @@
                             </form>
                         </x-slot>
                     </x-dropdown>
+                    @else
+                    <div class="flex space-x-4">
+                        <x-nav-link :href="route('login')" :active="request()->routeIs
+('login')">
+                            {{ __('Log In') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                            {{ __('Register') }}
+                        </x-nav-link>
+                    </div>
                 @endauth
             </div>
 
@@ -98,6 +108,15 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
+            @else
+                <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link :href="route('login')">
+                        {{ __('Log In') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('register')">
+                        {{ __('Register') }}
+                    </x-responsive-nav-link>
+                </div>
             @endauth
         </div>
     </div>

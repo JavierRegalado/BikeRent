@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use app\Models\Bike;
+use App\Models\Bike;
 use App\Models\Booking;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\Auth;
 use carbon\Carbon;
@@ -27,7 +28,9 @@ class BookingController extends Controller
         if ($bike->status !== 'available') {
             return redirect()->route('bikes.index')->with('error', 'Esta bicicleta no se encuentra disponible para alquilar.');
         }
-        return view('booking.create', compact('bike'));
+        $users = User::all();
+
+        return view('bookings.create', compact('bike', 'users'));
     }
 
     /**

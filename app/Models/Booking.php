@@ -10,14 +10,25 @@ class Booking extends Model
     protected $fillable = [
         'user_id',
         'bike_id',
-        'start_time',
-        'end_time',
-        'total_price',
+        'start_date',
+        'end_date',
+        'total_cost',
     ];
 
     protected $casts = [
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
-        'total_price' => 'decimal:2',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'total_cost' => 'decimal:2',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function bike()
+    {
+        return $this->belongsTo(Bike::class);
+    }
 }

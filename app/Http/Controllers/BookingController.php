@@ -6,8 +6,8 @@ use App\Models\Bike;
 use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\support\Facades\Auth;
-use carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -40,8 +40,8 @@ class BookingController extends Controller
     {
         $request->validate([
             'bike_id' => 'required|exists:bikes,id',
-            'start_time' => 'required|date|after_or_equal:now',
-            'end_time' => 'required|date|after:start_time',
+            'start_date' => 'required|date|after_or_equal:now',
+            'end_date' => 'required|date|after:start_date',
         ]);
 
         $bike = Bike::findOrFail($request->bike_id);
@@ -50,38 +50,38 @@ class BookingController extends Controller
             return back()->withErrors(['bike_id' => 'La bicicleta seleccionada no está disponible para alquilar.']);
         }
 
-        $startTime = Carbon::parse($request->start_time);
-        $endTime = Carbon::parse($request->end_time);
+        $startDate = Carbon::parse($request->start_date);
+        $endDate = Carbon::parse($request->end_date);
 
         $hasOverlap = Booking::where('bike_id', $bike->id)
             ->whereIn('status', ['pending', 'active'])
-            ->where(function ($query) use ($startTime, $endTime) {
-                $query->whereBetween('start_time', [$startTime, $endTime])
-                        ->orwhereBetween('end_time', [$startTime, $endTime])
-                        ->orwhere(function ($query) use ($startTime, $endTime){
-                            $query->where('start_time', '<=', $startTime)
-                                  ->where('end_time', '>=', $endTime);
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('start_date', [$startDate, $endDate])
+                        ->orwhereBetween('end_date', [$startDate, $endDate])
+                        ->orwhere(function ($query) use ($startDate, $endDate){
+                            $query->where('start_date', '<=', $startDate)
+                                  ->where('end_date', '>=', $endDate);
                         });
             })
             ->exists();
 
         if ($hasOverlap) {
-            return back()->withInput()->withErrors(['start_time' => 'La bicicleta seleccionada ya está reservada para el período de tiempo especificado.']);
+            return back()->withInput()->withErrors(['start_date' => 'La bicicleta seleccionada ya está reservada para el período de tiempo especificado.']);
         }
 
-        $hours = $startTime->diffInHours($endTime);
+        $hours = $startDate->diffInHours($endDate);
         $hours = $hours > 0 ? $hours : 1;
-        $totalPrice = $hours * $bike->price_per_hour;
+        $totalCost = $hours * $bike->price_per_hour;
 
         $booking = Booking::create([
             'user_id' => Auth::id(),
             'bike_id' => $bike->id,
-            'start_time' => $startTime,
-            'end_time' => $endTime,
-            'total_price' => $totalPrice,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'total_cost' => $totalCost,
         ]);
 
-        return redirect()->route('bookings.index')->with('success', 'Reserva creada exitosamente.');
+        return redirect()->route('booking.index')->with('success', 'Reserva creada exitosamente.');
 
     }
 

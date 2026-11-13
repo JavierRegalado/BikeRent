@@ -15,7 +15,7 @@
             <form action="{{ route('booking.cancel', $booking) }}" method="POST">
                 @csrf
                 @method('PATCH')
-                <button type="submit" class="text-red-500 hover:underline">
+                <button type="submit" class="">
                     Cancelar reserva
                 </button>
             </form>

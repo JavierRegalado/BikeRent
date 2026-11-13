@@ -81,6 +81,8 @@ class BookingController extends Controller
             'total_cost' => $totalCost,
         ]);
 
+        $bike->update(['status' => 'retired']);
+
         return redirect()->route('booking.index')->with('success', 'Reserva creada exitosamente.');
 
     }
@@ -131,6 +133,7 @@ class BookingController extends Controller
             return back()->with('error', 'Solo se pueden cancelar reservas pendientes.');
         }
         $booking->update(['status' => 'cancelled']);
-        return redirect()->route('bookings.index')->with('success', 'Reserva cancelada exitosamente.');
+        $booking->bike->update(['status' => 'available']);
+        return redirect()->route('booking.index')->with('success', 'Reserva cancelada exitosamente.');
     }
 }

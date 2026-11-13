@@ -2,12 +2,9 @@
     <div>
         <h1>Detalles de la Bicicleta</h1>
         
-        <p>
-            <a href="{{ route('bikes.index') }}">Volver al listado</a>
-        </p>
-
-        <p>
-            <a href="{{route('booking.create', ['bike' => $bike->id])}}" class="btn btn-primary">Registrar Préstamo</a>
+        <a href="{{ route('bikes.index') }}">Volver al listado</a>
+        <br>
+        <a href="{{route('booking.create', ['bike' => $bike->id])}}" class="btn btn-primary">Registrar Préstamo</a>
 
         <hr>
 

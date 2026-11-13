@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    @foreach ($bookings as $booking)
+<x-app-layout>
+
+    <a href="{{ url('/') }}">Inicio</a>
+
+    <div>
+        @foreach ($bookings as $booking)
         <div>
             <p>Usuario: {{ $booking->user->name }}</p>
             <p>Bicicleta: {{ $booking->bike->model }}</p>
-            <p>Fecha de Inicio: {{ $booking->start_date }}</p>
-            <p>Fecha de Fin: {{ $booking->end_date }}</p>
-            <p>Precio Total: ${{ number_format($booking->total_cost, 2) }}</p>
+            <a  href="{{ route('booking.show', $booking) }}" class="text-blue-500 hover:underline">Ver detalles de la reserva</a>
         </div>
-    @endforeach
-</body>
-</html>
+        @endforeach
+    </div>
+</x-app-layout>

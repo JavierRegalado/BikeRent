@@ -6,6 +6,9 @@
             <a href="{{ route('bikes.index') }}">Volver al listado</a>
         </p>
 
+        <p>
+            <a href="{{route('booking.create', ['bike' => $bike->id])}}" class="btn btn-primary">Registrar Préstamo</a>
+
         <hr>
 
         <table>

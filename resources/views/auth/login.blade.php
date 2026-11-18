@@ -8,7 +8,7 @@
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="" />
+            <x-text-input id="email" name="email" />
             <x-input-error :messages="$errors->get('email')" class="" />
         </div>
 

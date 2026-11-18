@@ -5,14 +5,14 @@
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="" />
+            <x-text-input id="name" name="name" />
             <x-input-error :messages="$errors->get('name')" class="" />
         </div>
 
         <!-- Email Address -->
         <div class="">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="" />
+            <x-text-input id="email" name="email" />
             <x-input-error :messages="$errors->get('email')" class="" />
         </div>
 
